@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const Port = process.env.Port;
+const Port = process.env.PORT;
 const LOCALHOST = '127.0.0.1';
 
 if (!Port) {
