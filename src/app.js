@@ -6,7 +6,7 @@ const ExpressApp = express();
 const cors = require('cors');
 
 require('./config/database');
-const { Port, LOCALHOST } = require('./config/config');
+const { PORT, LOCALHOST } = require('./config/config');
 
 ExpressApp.use(bodyParser.json());
 ExpressApp.use(express.json());
@@ -29,6 +29,6 @@ ExpressApp.use('/roles', rolesRoutes);
 ExpressApp.use('/auth', authRoutes);
 
 //ExpressApp.use('/species', especiesRoutes);
-ExpressApp.listen(Port, LOCALHOST, () => {
-  console.log(`Server is running on http://${LOCALHOST}:${Port}`);
+ExpressApp.listen(PORT, LOCALHOST, () => {
+  console.log(`Server is running on http://${LOCALHOST}:${PORT}`);
 });

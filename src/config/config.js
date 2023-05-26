@@ -1,11 +1,11 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const Port = process.env.PORT;
-const LOCALHOST = '127.0.0.1';
+const PORT = process.env.PORT;
+const LOCALHOST = '0.0.0.0';
 
-if (!Port) {
+if (!PORT) {
   throw new Error('PORT not found in environment variables');
 }
 
-module.exports = { Port, LOCALHOST };
+module.exports = { PORT, LOCALHOST };
