@@ -56,7 +56,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-01T11:21:52.803Z",
-    "modified": "2023-05-25T17:09:17.341Z",
+    "modified": "2023-05-26T01:40:29.224Z",
     "headers": [
       {
         "name": "Authorization",
@@ -66,7 +66,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\":\"Administrador\",\n  \"permissions\":[\"646f95f4c7d22e5fce0ad1fa\"],\n  \"isActive\": \"true\"\n}",
+      "raw": "{\n  \"name\":\"Administrador\",\n  \"permissions\":[\"64700dfc3f7150c5a6408f6c\"],\n  \"isActive\": \"true\"\n}",
       "form": []
     },
     "tests": []
@@ -365,12 +365,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-05T23:02:01.320Z",
-    "modified": "2023-05-25T18:40:41.853Z",
+    "modified": "2023-05-26T01:39:55.462Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": " {\n  \"email\":\"fanorio1990@gmail.com\",\n  \"password\":\"fanorio1990\"\n  }",
+      "raw": " {\n  \"email\":\"fanoro0@gmail.com\",\n  \"password\":\"fanoro\"\n  }",
       "form": []
     },
     "tests": []
@@ -422,17 +422,17 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-20T08:35:23.678Z",
-    "modified": "2023-05-25T17:25:05.737Z",
+    "modified": "2023-05-26T01:44:19.517Z",
     "headers": [
       {
         "name": "Authorization",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDZmOTk3YzU0YjIzZDIxZTc1NDYzN2YiLCJyb2xlIjpbeyJfaWQiOiI2NDZmOTYzYzMyZmMxMWE1ZWZjY2NkODEiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInBlcm1pc3Npb25zIjpbeyJfaWQiOiI2NDZmOTVmNGM3ZDIyZTVmY2UwYWQxZmEiLCJhbGlhcyI6Ikdlc3Rpw7NuIGRlIFVzdWFyaW9zIEFkbWluaXN0cmFkb3JlcyJ9XSwiaXNBY3RpdmUiOnRydWUsIl9fdiI6MH1dLCJpYXQiOjE2ODUwMzUzOTAsImV4cCI6MTY4NTY0MDE5MH0.8CsOYflUb6VqEt7QbLsHTR9GdqKVvWWO7mrFhzYZCbU"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDcwMGViM2E5MWE2MmE3MzRmZWIyMzQiLCJyb2xlIjpbeyJfaWQiOiI2NDcwMGUwZDNmNzE1MGM1YTY0MDhmNmUiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInBlcm1pc3Npb25zIjpbeyJfaWQiOiI2NDcwMGRmYzNmNzE1MGM1YTY0MDhmNmMiLCJhbGlhcyI6Ikdlc3Rpw7NuIGRlIFVzdWFyaW9zIEFkbWluaXN0cmFkb3JlcyJ9XSwiaXNBY3RpdmUiOnRydWUsIl9fdiI6MH1dLCJpYXQiOjE2ODUwNjUzOTUsImV4cCI6MTY4NTY3MDE5NX0.sBVJ9W2f6osezDS32GEX7l4lpcF8R5mUtBV8Ycn6510"
       }
     ],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\":\"Fanor\",\n  \"email\":\"fanorio1990@gmail.com\",\n  \"password\":\"fanorio1990\",\n  \"isActive\":true,\n  \"role\":[\"646f963c32fc11a5efcccd81\"]\n}",
+      "raw": "{\n  \"name\":\"Pablito\",\n  \"email\":\"pablito0@gmail.com\",\n  \"password\":\"pablito1990\",\n  \"isActive\":true,\n  \"role\":[\"64700e0d3f7150c5a6408f6e\"]\n}",
       "form": []
     },
     "tests": []
