@@ -1,33 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const verifyMiddleware = require('../../middlewares/verify.middleware');
-const checkPermissionMiddleware = require('../../middlewares/checkPermission.middleware');
+
 const userController = require('../../controllers/users/user.controller');
-const adminController = require('../../controllers/users/admin.controller');
 
-router.post(
-  '/create_user',
-  verifyMiddleware,
-  checkPermissionMiddleware(['Gestión de Usuarios']),
-  userController.createUser
-);
+// Rutas para administradores
+router.post('/admin/create', userController.createUser);
 
-router.get('/getAllu', verifyMiddleware, userController.getAllUsers);
+// Rutas para técnicos
+router.post('/technician/create', userController.createUser);
 
-router.get('/:id', verifyMiddleware, userController.getUser);
+// Rutas para encargados
+router.post('/supervisor/create', userController.createUser);
 
-router.put('/:id', verifyMiddleware, userController.updateUser);
-router.delete('/:id', verifyMiddleware, userController.deactivateUser);
+// Rutas para productores semilleristas
+router.post('/producer/create', userController.createUser);
 
-router.patch('/:id/activateu', verifyMiddleware, userController.activateUser);
+// Rutas para productores externos
+router.post('/external/create', userController.createUser);
 
-//administrators
+// Rutas para clientes fugas
+router.post('/client/create', userController.createUser);
 
-router.post(
-  '/create_user_admin',
-  verifyMiddleware,
-  checkPermissionMiddleware(['Gestión de Usuarios Administradores']),
-  adminController.createAdminUser
-);
+// Rutas para responsables de institución
+router.post('/institution/create', userController.createUser);
+
+/*// Resto de las rutas/*
+router.get('/:id', userController.getUser);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deactivateUser);
+router.patch('/:id/activate', userController.activateUser);*/
 
 module.exports = router;

@@ -33,5 +33,19 @@
     "created": "2023-05-20T08:35:02.955Z",
     "sortNum": 60000,
     "folders": []
+  },
+  {
+    "_id": "e4ea4519-2678-45e8-87d0-efdfe61b1010",
+    "colName": "Tecnico",
+    "created": "2023-06-03T06:55:20.020Z",
+    "sortNum": 70000,
+    "folders": []
+  },
+  {
+    "_id": "ba1097fc-494b-4dc7-babb-2ee510bcf61e",
+    "colName": "Encargado",
+    "created": "2023-06-03T07:00:56.453Z",
+    "sortNum": 80000,
+    "folders": []
   }
 ]

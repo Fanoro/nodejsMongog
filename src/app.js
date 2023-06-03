@@ -23,7 +23,7 @@ const permissionsRoutes = require('./routes/permission/permission.routes');
 const rolesRoutes = require('./routes/role/role.routes');
 
 //const especiesRoutes = require('./routes/service/specie.routes');
-ExpressApp.use('/users', usersRoutes);
+ExpressApp.use('/', usersRoutes);
 ExpressApp.use('/permissions', permissionsRoutes);
 ExpressApp.use('/roles', rolesRoutes);
 ExpressApp.use('/auth', authRoutes);

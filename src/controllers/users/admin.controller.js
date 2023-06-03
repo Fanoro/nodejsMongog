@@ -4,9 +4,9 @@ const {
 const userManagementMiddleware = require('../../middlewares/userManagement.middleware');
 const tokenGeneratorMiddleware = require('../../middlewares/generator.middleware');
 
-const adminController = {};
+const userController = {};
 
-adminController.createAdminUser = async (req, res) => {
+userController.createUser = async (req, res) => {
   try {
     await userValidationMiddleware(req, res, async () => {
       await userManagementMiddleware(req, res, async () => {
@@ -18,7 +18,7 @@ adminController.createAdminUser = async (req, res) => {
           await user.save();
 
           return res.status(201).json({
-            message: 'Administrador creado con éxito',
+            message: 'Usuario creado con éxito',
             user,
           });
         });
@@ -26,8 +26,8 @@ adminController.createAdminUser = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error al crear administrador' });
+    return res.status(500).json({ message: 'Error al crear Usuario' });
   }
 };
 
-module.exports = adminController;
+module.exports = userController;
