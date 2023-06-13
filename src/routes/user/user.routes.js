@@ -8,7 +8,7 @@ const adminController = require('../../controllers/users/admin.controller');
 router.post(
   '/create_user',
   verifyMiddleware,
-  checkPermissionMiddleware(['Gestión de Usuarios']),
+
   userController.createUser
 );
 
