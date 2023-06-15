@@ -36,50 +36,20 @@ const userManagementMiddleware = async (req, res, next, userType) => {
     // Realizar acciones específicas según el tipo de usuario
     switch (userType) {
       case 'admin':
-        verifyMiddleware(req, res, () => {});
-        checkPermissionMiddleware(['Gestión de Usuarios Administradores'])(
-          req,
-          res,
-          () => {}
-        );
-        // Acciones específicas para crear un administrador
         break;
       case 'technician':
-        verifyMiddleware(req, res, () => {});
-        checkPermissionMiddleware(['Gestión de Usuarios Técnicos'])(
-          req,
-          res,
-          () => {}
-        );
-        // Acciones específicas para crear un técnico
         break;
       case 'supervisor':
-        verifyMiddleware(req, res, () => {});
-        checkPermissionMiddleware(['Gestión de Usuarios Supervisores'])(
-          req,
-          res,
-          () => {}
-        );
-        // Acciones específicas para crear un supervisor
         break;
       case 'producer':
-        // Acciones específicas para crear un productor
-        break;
       case 'external':
-        // Acciones específicas para crear un usuario externo
-        break;
       case 'client':
-        // Acciones específicas para crear un cliente
-        break;
       case 'institution':
-        // Acciones específicas para crear un responsable de institución
-        break;
       default:
-        // Acciones por defecto si no se encuentra un tipo de usuario válido
+        // Para los casos restantes, simplemente llamar a `next()`
+        next();
         break;
     }
-
-    next();
   } catch (error) {
     console.error(error);
     if (error.name === 'MongoServerError' && error.code === 11000) {

@@ -1,16 +1,32 @@
 const express = require('express');
 const router = express.Router();
-
+const verifyMiddleware = require('../../middlewares/verify.middleware');
 const userController = require('../../controllers/users/user.controller');
+const checkPermissionMiddleware = require('../../middlewares/checkPermission.middleware');
 
 // Rutas para administradores
-router.post('/admin/create', userController.createUser);
+router.post(
+  '/admin/create',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Create Administrator', 'Create Technician']),
+  userController.createUser
+);
 
 // Rutas para técnicos
-router.post('/technician/create', userController.createUser);
+router.post(
+  '/technician/create',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Create Technician']),
+  userController.createUser
+);
 
 // Rutas para encargados
-router.post('/supervisor/create', userController.createUser);
+router.post(
+  '/supervisor/create',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Create Supervisor']),
+  userController.createUser
+);
 
 // Rutas para productores semilleristas
 router.post('/producer/create', userController.createUser);

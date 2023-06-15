@@ -21,7 +21,7 @@ permissionController.getAllPermissions = async (req, res, next) => {
 
 permissionController.getPermission = async (req, res) => {
   try {
-    const permission = await Permission.findOne({ alias: req.params.alias });
+    const permission = await Permission.findById(req.params.id);
     if (!permission) {
       return res.status(404).json({ message: 'Permission not found' });
     }
@@ -30,6 +30,7 @@ permissionController.getPermission = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 permissionController.updatePermission = async (req, res, next) => {
   try {
     const { id } = req.params;
