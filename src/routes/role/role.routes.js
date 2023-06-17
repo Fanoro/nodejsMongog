@@ -14,6 +14,6 @@ router.get('/getAllr', verifyMiddleware, rolesController.getAllRoles);
 router.get('/:id', verifyMiddleware, rolesController.getRole);
 
 // Actualizar rol
-router.patch('/:id', verifyMiddleware, rolesController.updateRole);
+router.put('/:id', verifyMiddleware, rolesController.updateRole);
 
 module.exports = router;

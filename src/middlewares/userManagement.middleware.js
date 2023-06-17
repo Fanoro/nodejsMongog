@@ -1,10 +1,8 @@
 const User = require('../models/user/user.model');
 const Role = require('../models/role/role.model');
 const bcrypt = require('bcrypt');
-const verifyMiddleware = require('../middlewares/verify.middleware');
-const checkPermissionMiddleware = require('../middlewares/checkPermission.middleware');
 
-const userManagementMiddleware = async (req, res, next, userType) => {
+const userManagementMiddleware = async (req, res, next) => {
   try {
     const { name, email, password, isActive, role } = req.body;
 
@@ -32,24 +30,7 @@ const userManagementMiddleware = async (req, res, next, userType) => {
       .select('-password');
 
     res.locals.user = userWithRole;
-
-    // Realizar acciones específicas según el tipo de usuario
-    switch (userType) {
-      case 'admin':
-        break;
-      case 'technician':
-        break;
-      case 'supervisor':
-        break;
-      case 'producer':
-      case 'external':
-      case 'client':
-      case 'institution':
-      default:
-        // Para los casos restantes, simplemente llamar a `next()`
-        next();
-        break;
-    }
+    next();
   } catch (error) {
     console.error(error);
     if (error.name === 'MongoServerError' && error.code === 11000) {
