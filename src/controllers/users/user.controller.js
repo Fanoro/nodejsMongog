@@ -10,9 +10,7 @@ userController.createUser = async (req, res, next) => {
   const userType = req.body.userType;
 
   try {
-    await userValidationMiddleware(req, res, async () => {
-      await userManagementMiddleware(req, res, next, userType);
-    });
+    await userManagementMiddleware(req, res, next, userType);
 
     await tokenGeneratorMiddleware(req, res, async () => {
       const user = res.locals.user;
