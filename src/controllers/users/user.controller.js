@@ -59,6 +59,7 @@ userController.getAllUser = async (req, res, next) => {
       {
         $match: {
           'roleInfo.name': roleName,
+          isActive: true, // Agregar filtro para mostrar solo usuarios activos
         },
       },
       {
@@ -91,6 +92,10 @@ userController.getUser = async (req, res, next) => {
     const user = await User.findById(userId).populate('role');
 
     if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    if (!user.isActive) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
@@ -129,6 +134,40 @@ userController.updateUser = async (req, res, next) => {
     console.error(error);
     let errorMessage = `Error al actualizar usuario con rol ${userType}`;
     return res.status(500).json({ message: errorMessage });
+  }
+};
+userController.desactivateUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { isActive: false });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    return res.status(200).json({ message: 'Usuario desactivado con éxito' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error al desactivar usuario' });
+  }
+};
+
+userController.activateUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { isActive: true });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // No es necesario devolver el objeto de usuario actualizado en la respuesta
+    return res.status(200).json({ message: 'Usuario activado con éxito' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error al activar usuario' });
   }
 };
 

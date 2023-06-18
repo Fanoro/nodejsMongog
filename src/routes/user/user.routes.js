@@ -29,6 +29,19 @@ router.put(
   checkPermissionMiddleware(['Update Administrator']),
   userController.updateUser
 );
+// Ruta para desactivar usuario
+router.put(
+  '/admin/:id/desactivate',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Desactivate Administrator']), // Agrega el permiso necesario para desactivar usuarios
+  userController.desactivateUser
+);
+router.put(
+  '/admin/:id/activate',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Activate Administrator']), // Agrega el permiso necesario para desactivar usuarios
+  userController.activateUser
+);
 
 // Rutas para técnicos
 router.post(
@@ -54,6 +67,18 @@ router.put(
   verifyMiddleware,
   checkPermissionMiddleware(['Update Technician']),
   userController.updateUser
+);
+router.put(
+  '/technician/:id/desactivate',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Desactivate Technician']), // Agrega el permiso necesario para desactivar usuarios
+  userController.desactivateUser
+);
+router.put(
+  '/technician/:id/activate',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Activate Technician']), // Agrega el permiso necesario para desactivar usuarios
+  userController.activateUser
 );
 
 // Rutas para encargados
@@ -82,11 +107,17 @@ router.put(
   checkPermissionMiddleware(['Update Supervisor']),
   userController.updateUser
 );
-router.get(
-  '/supervisor/:id',
+router.put(
+  '/supervisor/:id/desactivate',
   verifyMiddleware,
-  checkPermissionMiddleware(['Get Supervisor']),
-  userController.getUser
+  checkPermissionMiddleware(['Desactivate Supervisor']), // Agrega el permiso necesario para desactivar usuarios
+  userController.desactivateUser
+);
+router.put(
+  '/supervisor/:id/activate',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Activate Supervisor']), // Agrega el permiso necesario para desactivar usuarios
+  userController.activateUser
 );
 
 module.exports = router;
