@@ -19,14 +19,15 @@ ExpressApp.use(cors({ origin: '*' }));
 const authRoutes = require('./routes/auth/auth.routes');
 
 const usersRoutes = require('./routes/user/user.routes');
+
 const permissionsRoutes = require('./routes/permission/permission.routes');
 const rolesRoutes = require('./routes/role/role.routes');
 
 //const especiesRoutes = require('./routes/service/specie.routes');
-ExpressApp.use('/users', usersRoutes);
 ExpressApp.use('/permissions', permissionsRoutes);
 ExpressApp.use('/roles', rolesRoutes);
 ExpressApp.use('/auth', authRoutes);
+ExpressApp.use('/', usersRoutes);
 
 //ExpressApp.use('/species', especiesRoutes);
 ExpressApp.listen(PORT, LOCALHOST, () => {

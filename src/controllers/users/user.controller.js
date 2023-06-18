@@ -1,254 +1,174 @@
-const User = require('../../models/user/user.model');
-const Role = require('../../models/role/role.model');
-const Permission = require('../../models/permission/permission.model');
-const bcrypt = require('bcrypt');
 const {
   userValidationMiddleware,
 } = require('../../middlewares/validation.middleware');
-const {
-  generateAccessToken,
-  generateRefreshToken,
-} = require('../../config/tokenGenerator');
+const User = require('../../models/user/user.model');
+const userManagementMiddleware = require('../../middlewares/userManagement.middleware');
+const tokenGeneratorMiddleware = require('../../middlewares/generator.middleware');
 const userController = {};
 
-userController.createUser = async (req, res) => {
+userController.createUser = async (req, res, next) => {
+  const userType = req.body.userType;
+
   try {
-    await userValidationMiddleware(req, res, async () => {
-      const { name, email, password, isActive, role } = req.body;
+    await userManagementMiddleware(req, res, next, userType);
 
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await tokenGeneratorMiddleware(req, res, async () => {
+      const user = res.locals.user;
+      const tokens = res.locals.tokens;
 
-      const roleObject = await Role.findById(role);
-
-      const user = await User.create({
-        name,
-        email,
-        password: hashedPassword,
-        isActive,
-        role: [roleObject],
-      });
-
-      const userWithRole = await User.findById(user._id)
-        .populate({
-          path: 'role',
-          populate: {
-            path: 'permissions',
-            select: '_id alias',
-          },
-        })
-        .select('-password');
-
-      const accessToken = generateAccessToken({
-        userId: user._id,
-        role: user.role,
-      });
-
-      const refreshToken = generateRefreshToken({
-        userId: user._id,
-        role: user.role,
-      });
-
-      res.setHeader('X-Access-Token', accessToken);
-      res.setHeader('Authorization', refreshToken);
+      user.refreshToken = tokens.refreshToken;
+      await user.save();
 
       return res.status(201).json({
-        message: 'Usuario creado con éxito',
-        user: userWithRole,
+        message: `Usuario con rol ${userType} creado con éxito`,
+        userType,
+        user,
       });
     });
   } catch (error) {
     console.error(error);
-    if (error.name === 'MongoServerError' && error.code === 11000) {
-      return res
-        .status(400)
-        .json({ message: 'El correo electrónico ya está registrado' });
-    }
-    return res.status(500).json({ message: 'Error al crear usuario' });
+    let errorMessage = `Error al crear usuario con rol ${userType}`;
+    return res.status(500).json({ message: errorMessage });
   }
 };
-
-userController.getAllUsers = async (req, res, next) => {
+userController.getAllUser = async (req, res, next) => {
   try {
-    const users = await User.find()
-      .populate({
-        path: 'role',
-        populate: {
-          path: 'permissions',
-          select: '_id alias',
+    let roleName = '';
+
+    // Determinar el nombre del rol según la ruta
+    if (req.path.includes('/admin/')) {
+      roleName = 'Administrator';
+    } else if (req.path.includes('/technician/')) {
+      roleName = 'Technician';
+    } else if (req.path.includes('/supervisor/')) {
+      roleName = 'Supervisor';
+    }
+
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'roles',
+          localField: 'role',
+          foreignField: '_id',
+          as: 'roleInfo',
         },
-      })
-      .select('-password');
+      },
+      {
+        $unwind: '$roleInfo',
+      },
+      {
+        $match: {
+          'roleInfo.name': roleName,
+          isActive: true, // Agregar filtro para mostrar solo usuarios activos
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          email: 1,
+          isActive: 1,
+          role: 1,
+        },
+      },
+    ]);
 
-    const filteredUsers = users.filter((user) => user.isActive);
-
-    res.status(200).json({
-      message: 'Usuarios encontrados con éxito',
-      users: filteredUsers.map((user) => {
-        return {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          isActive: user.isActive,
-          role: user.role.map((role) => {
-            return {
-              _id: role._id,
-              name: role.name,
-              permissions: role.permissions.map((permission) => ({
-                _id: permission._id,
-                alias: permission.alias,
-              })),
-            };
-          }),
-        };
-      }),
+    return res.status(200).json({
+      message: 'Lista de usuarios obtenida con éxito',
+      users,
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: 'Error al obtener la lista de usuarios' });
   }
 };
 
 userController.getUser = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id).populate({
-      path: 'role',
-      select: 'name permissions',
-      populate: {
-        path: 'permissions',
-        select: 'name',
-      },
-    });
+  const userId = req.params.id;
 
-    if (!user || !user.isActive) {
+  try {
+    const user = await User.findById(userId).populate('role');
+
+    if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isActive: user.isActive,
-      role: user.role.map((role) => {
-        return {
-          _id: role._id,
-          name: role.name,
-          permissions: role.permissions.map((permission) => permission.name),
-        };
-      }),
-    });
+    if (!user.isActive) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'Usuario obtenido con éxito', user });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({ message: 'Error al obtener usuario' });
   }
 };
 
 userController.updateUser = async (req, res, next) => {
+  const userId = req.params.id;
+  const userType = req.body.userType;
+
   try {
     await userValidationMiddleware(req, res, async () => {
-      const { name, email, password, role, isActive } = req.body;
-      const { id } = req.params;
+      await userManagementMiddleware(req, res, next, userType);
+    });
 
-      const user = await User.findById(id);
+    await tokenGeneratorMiddleware(req, res, async () => {
+      const user = res.locals.user;
+      const tokens = res.locals.tokens;
 
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
-
-      let rolesArray, permissionsArray;
-
-      if (role) {
-        rolesArray = await Role.find({
-          _id: { $in: role },
-        });
-
-        if (!rolesArray.length) {
-          return res.status(404).json({ message: 'Roles no encontrados' });
-        }
-
-        permissionsArray = await Permission.find({
-          role: { $in: role },
-        });
-      }
-
-      user.name = name || user.name;
-      user.email = email || user.email;
-      user.isActive = isActive === undefined ? user.isActive : isActive;
-
-      if (password) {
-        const hashedPassword = await bcrypt.hash(password, 8);
-        user.password = hashedPassword;
-      }
-
-      if (role) {
-        user.role = rolesArray.map((role) => role._id);
-        user.permissionIds = permissionsArray.map(
-          (permission) => permission._id
-        );
-      }
-
+      user.refreshToken = tokens.refreshToken;
       await user.save();
 
-      res.status(200).json({
-        message: 'Usuario actualizado con éxito',
-        user: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          isActive: user.isActive,
-          role: rolesArray.map((role) => {
-            return {
-              _id: role._id,
-              name: role.name,
-              permissionIds: role.permissions.map(
-                (permission) => permission._id
-              ),
-            };
-          }),
-        },
+      return res.status(200).json({
+        message: `Usuario con rol ${userType} actualizado con éxito`,
+        userType,
+        user,
       });
     });
   } catch (error) {
-    next(error);
+    console.error(error);
+    let errorMessage = `Error al actualizar usuario con rol ${userType}`;
+    return res.status(500).json({ message: errorMessage });
   }
 };
+userController.desactivateUser = async (req, res, next) => {
+  const userId = req.params.id;
 
-userController.deactivateUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no Encontrado' });
-    }
-
-    user.isActive = false;
-    await user.save();
-
-    res.status(200).json({ message: 'Usuario desactivado con éxito' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error desactivando usuario', error });
-  }
-};
-
-userController.activateUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findByIdAndUpdate(
-      id,
-      { isActive: true },
-      { new: true }
-    );
+    const user = await User.findByIdAndUpdate(userId, { isActive: false });
 
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    res.status(200).json({
-      message: 'Usuario activado exitosamente',
-      user: user,
-    });
+    return res.status(200).json({ message: 'Usuario desactivado con éxito' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al activar usuario', error });
+    console.error(error);
+    return res.status(500).json({ message: 'Error al desactivar usuario' });
   }
 };
+
+userController.activateUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { isActive: true });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // No es necesario devolver el objeto de usuario actualizado en la respuesta
+    return res.status(200).json({ message: 'Usuario activado con éxito' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error al activar usuario' });
+  }
+};
+
 module.exports = userController;
