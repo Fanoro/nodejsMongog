@@ -31,6 +31,58 @@ userController.createUser = async (req, res, next) => {
     return res.status(500).json({ message: errorMessage });
   }
 };
+userController.getAllUser = async (req, res, next) => {
+  try {
+    let roleName = '';
+
+    // Determinar el nombre del rol según la ruta
+    if (req.path.includes('/admin/')) {
+      roleName = 'Administrator';
+    } else if (req.path.includes('/technician/')) {
+      roleName = 'Technician';
+    } else if (req.path.includes('/supervisor/')) {
+      roleName = 'Supervisor';
+    }
+
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'roles',
+          localField: 'role',
+          foreignField: '_id',
+          as: 'roleInfo',
+        },
+      },
+      {
+        $unwind: '$roleInfo',
+      },
+      {
+        $match: {
+          'roleInfo.name': roleName,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          email: 1,
+          isActive: 1,
+          role: 1,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      message: 'Lista de usuarios obtenida con éxito',
+      users,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: 'Error al obtener la lista de usuarios' });
+  }
+};
 
 userController.getUser = async (req, res, next) => {
   const userId = req.params.id;

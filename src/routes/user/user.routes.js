@@ -11,19 +11,23 @@ router.post(
   checkPermissionMiddleware(['Create Administrator']),
   userController.createUser
 );
-
-router.put(
-  '/admin/:id',
+router.get(
+  '/admin/all',
   verifyMiddleware,
-  checkPermissionMiddleware(['Update Administrator']),
-  userController.updateUser
+  checkPermissionMiddleware(['Get All Administrator']),
+  userController.getAllUser
 );
-
 router.get(
   '/admin/:id',
   verifyMiddleware,
   checkPermissionMiddleware(['Get Administrator']),
   userController.getUser
+);
+router.put(
+  '/admin/:id',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Update Administrator']),
+  userController.updateUser
 );
 
 // Rutas para técnicos
@@ -33,19 +37,23 @@ router.post(
   checkPermissionMiddleware(['Create Technician']),
   userController.createUser
 );
-
-router.put(
-  '/technician/:id',
+router.get(
+  '/technician/all',
   verifyMiddleware,
-  checkPermissionMiddleware(['Update Technician']),
-  userController.updateUser
+  checkPermissionMiddleware(['Get All Technician']),
+  userController.getAllUser
 );
-
 router.get(
   '/technician/:id',
   verifyMiddleware,
   checkPermissionMiddleware(['Get Technician']),
   userController.getUser
+);
+router.put(
+  '/technician/:id',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Update Technician']),
+  userController.updateUser
 );
 
 // Rutas para encargados
@@ -55,6 +63,19 @@ router.post(
   checkPermissionMiddleware(['Create Supervisor']),
   userController.createUser
 );
+router.get(
+  '/supervisor/all',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Get All Supervisor']),
+  userController.getAllUser
+);
+router.get(
+  '/supervisor/:id',
+  verifyMiddleware,
+  checkPermissionMiddleware(['Get Supervisor']),
+  userController.getUser
+);
+
 router.put(
   '/supervisor/:id',
   verifyMiddleware,
