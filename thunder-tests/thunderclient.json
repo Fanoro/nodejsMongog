@@ -361,11 +361,11 @@
     "colId": "f8acdd96-261b-45e6-affb-6bc43b305aa3",
     "containerId": "",
     "name": "Login",
-    "url": "http://127.0.0.1:14000/auth/login",
+    "url": "http://0.0.0.0:5000/auth/login",
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-05T23:02:01.320Z",
-    "modified": "2023-06-18T02:47:56.685Z",
+    "modified": "2023-06-19T04:58:02.615Z",
     "headers": [],
     "params": [],
     "body": {
@@ -418,15 +418,15 @@
     "colId": "5b973069-97a4-4409-a861-bf3ea49511ff",
     "containerId": "",
     "name": "CreateAdminUser",
-    "url": "http://0.0.0.0:14000/admin/create",
+    "url": "http://0.0.0.0:5000/admin/create",
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-20T08:35:23.678Z",
-    "modified": "2023-05-26T01:44:19.517Z",
+    "modified": "2023-06-19T05:02:21.817Z",
     "headers": [
       {
         "name": "Authorization",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDcwMGViM2E5MWE2MmE3MzRmZWIyMzQiLCJyb2xlIjpbeyJfaWQiOiI2NDcwMGUwZDNmNzE1MGM1YTY0MDhmNmUiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsInBlcm1pc3Npb25zIjpbeyJfaWQiOiI2NDcwMGRmYzNmNzE1MGM1YTY0MDhmNmMiLCJhbGlhcyI6Ikdlc3Rpw7NuIGRlIFVzdWFyaW9zIEFkbWluaXN0cmFkb3JlcyJ9XSwiaXNBY3RpdmUiOnRydWUsIl9fdiI6MH1dLCJpYXQiOjE2ODUwNjUzOTUsImV4cCI6MTY4NTY3MDE5NX0.sBVJ9W2f6osezDS32GEX7l4lpcF8R5mUtBV8Ycn6510"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhlM2JlYTdhNTE1ZTJlNjhkOGM4ZTEiLCJyb2xlIjpbIjY0OGUwOTk4MGQxMzIwYjExMDE0MTRiNCJdLCJpYXQiOjE2ODcxNTA2ODIsImV4cCI6MTY4NzE1MTU4Mn0.hLYJp1AeNbNAMcMqzqHscr4xDsI5FcdBtM7qNz7u5mc"
       }
     ],
     "params": [],
@@ -546,6 +546,25 @@
       {
         "name": "Authorization",
         "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhlM2Q5Yjg1OGZhOGM3NTc4MTI5MDUiLCJyb2xlIjpbIjY0OGUxNjQxYTAzMWM4M2Y4YzQyYWIyOSJdLCJpYXQiOjE2ODcwNTU1MDEsImV4cCI6MTY4NzA1NjQwMX0.ugS5XByI8WvtG2kwsc2NSKmsQW3JhAU5NprrMgv66AY"
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "39b4dbdb-38ee-4d8c-8abc-6b8ec309cfed",
+    "colId": "5b973069-97a4-4409-a861-bf3ea49511ff",
+    "containerId": "",
+    "name": "getallUsersAdmins",
+    "url": "http://0.0.0.0:5000/admin/all",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-06-19T04:58:54.025Z",
+    "modified": "2023-06-19T04:59:31.899Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhlM2JlYTdhNTE1ZTJlNjhkOGM4ZTEiLCJyb2xlIjpbIjY0OGUwOTk4MGQxMzIwYjExMDE0MTRiNCJdLCJpYXQiOjE2ODcxNTA2ODIsImV4cCI6MTY4NzE1MTU4Mn0.hLYJp1AeNbNAMcMqzqHscr4xDsI5FcdBtM7qNz7u5mc"
       }
     ],
     "params": [],
