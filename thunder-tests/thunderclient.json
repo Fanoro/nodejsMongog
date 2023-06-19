@@ -422,17 +422,17 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-05-20T08:35:23.678Z",
-    "modified": "2023-06-19T07:48:12.763Z",
+    "modified": "2023-06-19T15:31:58.509Z",
     "headers": [
       {
         "name": "Authorization",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhlM2JlYTdhNTE1ZTJlNjhkOGM4ZTEiLCJyb2xlIjpbIjY0OGUwOTk4MGQxMzIwYjExMDE0MTRiNCJdLCJpYXQiOjE2ODcxNjA4NjksImV4cCI6MTY4Nzc2NTY2OX0.ut0oc5a4N3WBgp6DWS22jkdFMSVW5cmUaba2bL95tZU"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhlM2JlYTdhNTE1ZTJlNjhkOGM4ZTEiLCJyb2xlIjpbIjY0OGUwOTk4MGQxMzIwYjExMDE0MTRiNCJdLCJpYXQiOjE2ODcxODg2ODQsImV4cCI6MTY4Nzc5MzQ4NH0.xDUAS42umNSV05u2y59ktWhgZHsD-anbTl_DXYUvBZo"
       }
     ],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\":\"Limber\",\n  \"email\":\"limber@gmail.com\",\n  \"password\":\"12345678\",\n  \"isActive\":true,\n\"role\":[\"648e09980d1320b1101414b4\"],\n\"userType\":\"admin\"\n}",
+      "raw": "{\n  \"name\":\"Ditmar\",\n  \"email\":\"ditmar@gmail.com\",\n  \"password\":\"12345678\",\n  \"isActive\":true,\n\"role\":[\"648e09980d1320b1101414b4\"],\n\"userType\":\"admin\"\n}",
       "form": []
     },
     "tests": []
