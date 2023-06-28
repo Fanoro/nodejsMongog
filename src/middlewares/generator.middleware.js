@@ -24,7 +24,7 @@ const tokenGeneratorMiddleware = (req, res, next) => {
   // Establecer la cookie HTTPOnly para el token de actualización
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    // secure: true, // Asegúrate de que la conexión sea HTTPS para habilitar esta opción en producción
+    secure: true, // Asegúrate de que la conexión sea HTTPS para habilitar esta opción en producción
   });
 
   next();

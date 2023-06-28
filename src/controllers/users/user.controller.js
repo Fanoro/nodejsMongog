@@ -12,12 +12,13 @@ userController.createUser = async (req, res, next) => {
   try {
     await userManagementMiddleware(req, res, next, userType);
 
-    await tokenGeneratorMiddleware(req, res, async () => {
+    tokenGeneratorMiddleware(req, res, () => {
+      // Asegúrate de pasar la función `next` aquí
       const user = res.locals.user;
       const tokens = res.locals.tokens;
 
       user.refreshToken = tokens.refreshToken;
-      await user.save();
+      user.save(); // Elimina la palabra clave `await` aquí
 
       return res.status(201).json({
         message: `Usuario con rol ${userType} creado con éxito`,
@@ -31,6 +32,7 @@ userController.createUser = async (req, res, next) => {
     return res.status(500).json({ message: errorMessage });
   }
 };
+
 userController.getAllUser = async (req, res, next) => {
   try {
     let roleName = '';

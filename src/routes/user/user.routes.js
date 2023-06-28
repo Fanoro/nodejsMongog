@@ -1,142 +1,150 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const verifyMiddleware = require("../../middlewares/verify.middleware");
-const userController = require("../../controllers/users/user.controller");
-const checkPermissionMiddleware = require("../../middlewares/checkPermission.middleware");
+const verifyMiddleware = require('../../middlewares/verify.middleware');
+const userController = require('../../controllers/users/user.controller');
+const checkPermissionMiddleware = require('../../middlewares/checkPermission.middleware');
+
+// Definir permisos para cada tipo de usuario
+const adminPermissions = [
+  'Create Administrator',
+  'Get All Administrator',
+  'Get Administrator',
+  'Update Administrator',
+  'Desactivate Administrator',
+  'Activate Administrator',
+];
+
+const technicianPermissions = [
+  'Create Technician',
+  'Get All Technician',
+  'Get Technician',
+  'Update Technician',
+  'Desactivate Technician',
+  'Activate Technician',
+];
+
+const supervisorPermissions = [
+  'Create Supervisor',
+  'Get All Supervisor',
+  'Get Supervisor',
+  'Update Supervisor',
+  'Desactivate Supervisor',
+  'Activate Supervisor',
+];
 
 // Rutas para administradores
 router.post(
-  "/admin/create",
+  '/admin/create',
   verifyMiddleware,
-  checkPermissionMiddleware(["Create Administrator"]),
+  checkPermissionMiddleware(adminPermissions[0]),
   userController.createUser
 );
 router.get(
-  "/admin/all",
+  '/admin/all',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get All Administrator"]),
+  checkPermissionMiddleware(adminPermissions[1]),
   userController.getAllUser
 );
 router.get(
-  "/admin/:id",
+  '/admin/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get Administrator"]),
+  checkPermissionMiddleware(adminPermissions[2]),
   userController.getUser
 );
 router.put(
-  "/admin/:id",
+  '/admin/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Update Administrator"]),
+  checkPermissionMiddleware(adminPermissions[3]),
   userController.updateUser
 );
-// Ruta para desactivar usuario
 router.put(
-  "/admin/:id/desactivate",
+  '/admin/:id/desactivate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Desactivate Administrator"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(adminPermissions[4]),
   userController.desactivateUser
 );
 router.put(
-  "/admin/:id/activate",
+  '/admin/:id/activate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Activate Administrator"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(adminPermissions[5]),
   userController.activateUser
 );
 
 // Rutas para técnicos
 router.post(
-  "/technician/create",
+  '/technician/create',
   verifyMiddleware,
-  checkPermissionMiddleware(["Create Technician"]),
+  checkPermissionMiddleware(technicianPermissions[0]),
   userController.createUser
 );
 router.get(
-  "/technician/all",
+  '/technician/all',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get All Technician"]),
+  checkPermissionMiddleware(technicianPermissions[1]),
   userController.getAllUser
 );
 router.get(
-  "/technician/:id",
+  '/technician/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get Technician"]),
+  checkPermissionMiddleware(technicianPermissions[2]),
   userController.getUser
 );
 router.put(
-  "/technician/:id",
+  '/technician/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Update Technician"]),
+  checkPermissionMiddleware(technicianPermissions[3]),
   userController.updateUser
 );
 router.put(
-  "/technician/:id/desactivate",
+  '/technician/:id/desactivate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Desactivate Technician"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(technicianPermissions[4]),
   userController.desactivateUser
 );
 router.put(
-  "/technician/:id/activate",
+  '/technician/:id/activate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Activate Technician"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(technicianPermissions[5]),
   userController.activateUser
 );
 
 // Rutas para encargados
 router.post(
-  "/supervisor/create",
+  '/supervisor/create',
   verifyMiddleware,
-  checkPermissionMiddleware(["Create Supervisor"]),
+  checkPermissionMiddleware(supervisorPermissions[0]),
   userController.createUser
 );
 router.get(
-  "/supervisor/all",
+  '/supervisor/all',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get All Supervisor"]),
+  checkPermissionMiddleware(supervisorPermissions[1]),
   userController.getAllUser
 );
 router.get(
-  "/supervisor/:id",
+  '/supervisor/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Get Supervisor"]),
+  checkPermissionMiddleware(supervisorPermissions[2]),
   userController.getUser
 );
 
 router.put(
-  "/supervisor/:id",
+  '/supervisor/:id',
   verifyMiddleware,
-  checkPermissionMiddleware(["Update Supervisor"]),
+  checkPermissionMiddleware(supervisorPermissions[3]),
   userController.updateUser
 );
 router.put(
-  "/supervisor/:id/desactivate",
+  '/supervisor/:id/desactivate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Desactivate Supervisor"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(supervisorPermissions[4]),
   userController.desactivateUser
 );
 router.put(
-  "/supervisor/:id/activate",
+  '/supervisor/:id/activate',
   verifyMiddleware,
-  checkPermissionMiddleware(["Activate Supervisor"]), // Agrega el permiso necesario para desactivar usuarios
+  checkPermissionMiddleware(supervisorPermissions[5]),
   userController.activateUser
 );
 
 module.exports = router;
-/*
-// Rutas para productores semilleristas
-router.post('/producer/create', userController.createUser);
-
-// Rutas para productores externos
-router.post('/external/create', userController.createUser);
-
-// Rutas para clientes fugas
-router.post('/client/create', userController.createUser);
-
-// Rutas para responsables de institución
-router.post('/institution/create', userController.createUser);
-
-
-// Resto de las rutas/*
-
-router.put('/:id', userController.updateUser);
-router.delete('/:id', userController.deactivateUser);
-router.patch('/:id/activate', userController.activateUser);*/

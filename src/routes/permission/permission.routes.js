@@ -1,37 +1,37 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const verifyMiddleware = require('../../middlewares/verify.middleware');
-const permissionsController = require('../../controllers/permissions/permission.controller');
-const checkPermissionMiddleware = require('../../middlewares/checkPermission.middleware');
+const verifyMiddleware = require("../../middlewares/verify.middleware");
+const permissionsController = require("../../controllers/permissions/permission.controller");
+const checkPermissionMiddleware = require("../../middlewares/checkPermission.middleware");
 // Crear permiso
 router.post(
-  '/create_permission',
+  "/create_permission",
   verifyMiddleware,
-  checkPermissionMiddleware(['Management Permissions']),
+  checkPermissionMiddleware(["Create Permission"]),
   permissionsController.createPermission
 );
 
 // Listar permisos
 router.get(
-  '/getAllp',
+  "/getAllp",
   verifyMiddleware,
-  checkPermissionMiddleware(['Management Permissions']),
+  checkPermissionMiddleware(["Management Permissions"]),
   permissionsController.getAllPermissions
 );
 
 // Obtener permiso por ID
 router.get(
-  '/:id',
+  "/:id",
   verifyMiddleware,
-  checkPermissionMiddleware(['Management Permissions']),
+  checkPermissionMiddleware(["Management Permissions"]),
   permissionsController.getPermission
 );
 
 // Actualizar permiso
 router.put(
-  '/:id',
+  "/:id",
   verifyMiddleware,
-  checkPermissionMiddleware(['Management Permissions']),
+  checkPermissionMiddleware(["Update Permission"]),
   permissionsController.updatePermission
 );
 

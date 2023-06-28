@@ -67,9 +67,10 @@ const userManagementMiddleware = async (req, res, next, userType) => {
         break;
       default:
         // Para los casos restantes, simplemente llamar a `next()`
-        next();
         break;
     }
+
+    next(); // Llamar a next() para pasar la ejecución al siguiente middleware o controlador
   } catch (error) {
     console.error(error);
     if (error.name === 'MongoServerError' && error.code === 11000) {

@@ -16,7 +16,7 @@ router.post(
 router.get(
   '/getAllr',
   verifyMiddleware,
-  checkPermissionMiddleware(['Management Roles']),
+  checkPermissionMiddleware(['Get All Roles']),
   rolesController.getAllRoles
 );
 

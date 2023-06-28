@@ -6,7 +6,6 @@ const {
 
 const tokenGeneratorMiddleware = require("../../middlewares/generator.middleware");
 const authController = {};
-
 authController.login = async (req, res) => {
   await credentialsValidationMiddleware(req, res, async () => {
     const { email, password } = req.body;
@@ -29,12 +28,12 @@ authController.login = async (req, res) => {
         // Devuelve el token de acceso en el cuerpo de la respuesta
         return res.status(200).json({
           message: "Inicio de sesión exitoso",
-
           user: {
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
+            userType: user.userType,
           },
           accessToken: res.locals.tokens.accessToken,
         });
